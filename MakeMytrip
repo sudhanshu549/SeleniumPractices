@@ -1,0 +1,53 @@
+package automation_practices;
+
+import java.time.Duration;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.interactions.Actions;
+import org.testng.Assert;
+
+public class Makemytrip {
+
+	public static void main(String[] args) throws InterruptedException {
+		// TODO Auto-generated method stub
+		System.setProperty("webdriver.chrome.driver", "C:\\chromedriver.exe");
+		WebDriver driver = new ChromeDriver();
+		driver.get("https://www.makemytrip.com");
+		driver.manage().window().maximize();
+		//String title = driver.getTitle();
+		//Assert.assertSame(driver.getTitle(),"MakeMyTrip - #1 Travel Website 50% OFF on Hotels, Flights & Holiday");
+		driver.findElement(By.className("landingContainer")).click();
+		driver.findElement(By.id("fromCity")).click();
+		//driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(100));
+		Thread.sleep(1000);
+		WebElement source = driver.findElement(By.xpath("//input[@placeholder='From']"));
+		source.click();
+		source.sendKeys("pat");
+		Thread.sleep(2000);
+		List<WebElement> options = driver.findElements(By.xpath("//p[normalize-space()='Patna, India']"));
+
+		for (WebElement option : options) {
+			if (option.getText().equals("Patna, India"))
+				option.click();
+		}
+		Thread.sleep(2000);
+		WebElement destination = driver.findElement(By.xpath("//input[@placeholder='To']"));
+		destination.sendKeys("Delhi");
+		Thread.sleep(2000);
+		List<WebElement> options1 = driver.findElements(By.xpath("//p[normalize-space()='New Delhi, India']"));
+		for (WebElement opt : options1) {
+			if (opt.getText().equalsIgnoreCase("New Delhi, India"))
+				opt.click();
+		}
+		driver.findElement(By.cssSelector(".DayPicker-Day.DayPicker-Day--selected")).click();
+		driver.findElement(By.cssSelector(".primaryBtn.font24.latoBold.widgetSearchBtn ")).click();
+		Thread.sleep(3000);
+		driver.findElement(By.xpath("(//button[@class='button actionBtn'])[2]")).click();
+		
+	}
+}
