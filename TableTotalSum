@@ -1,0 +1,43 @@
+package selPractices;
+
+import java.util.List;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.Assert;
+
+
+
+public class TableGrid {
+
+	public static void main(String[] args) {
+		System.setProperty("webdriver.chrome.driver", "c:\\Chromedriver.exe");
+		WebDriver driver = new ChromeDriver();
+		driver.get("https://www.rahulshettyacademy.com/AutomationPractice/");
+		driver.manage().window().maximize();
+		List<WebElement> Amount = driver.findElements(By.xpath("//div[@class='tableFixHead']//tbody/tr/td[4]"));
+		int Total = 0;
+		for(int i =0 ; i<Amount.size();i++) {
+			int sum = Integer.parseInt(Amount.get(i).getText());
+			Total =Total +sum;
+		}
+		System.out.println(Total);
+		int CompareAmt = Integer.parseInt(driver.findElement(By.cssSelector(".totalAmount")).getText().split(":")[1].trim());
+		System.out.println(CompareAmt);
+		Assert.assertEquals(Total, CompareAmt);
+		
+		List<WebElement> newgrid = driver.findElements(By.xpath("//body[1]/div[3]/div[1]/fieldset[1]/table[1]/tbody[1]//td[3]"));
+		int newsum=0;
+		for(int j =0; j< newgrid.size();j++) {
+			 int newTotal = Integer.parseInt(newgrid.get(j).getText());
+			 newsum= newsum+ newTotal;
+		}
+		System.out.println(newsum);
+		
+		
+	
+		
+	}
+
+}
