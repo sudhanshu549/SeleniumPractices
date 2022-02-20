@@ -1,0 +1,41 @@
+package selPractices;
+
+import java.util.Iterator;
+import java.util.Set;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+public class NewWindowHandle {
+
+	public static void main(String[] args) throws InterruptedException {
+		System.setProperty("webdriver.chrome.driver", "c:\\Chromedriver.exe");
+		WebDriver driver = new ChromeDriver();
+		driver.get("https://www.rahulshettyacademy.com/AutomationPractice/");
+		driver.manage().window().maximize();
+		driver.findElement(By.id("openwindow")).click();
+		Set<String> window = driver.getWindowHandles();
+		Iterator<String> it = window.iterator();
+		String BeforeClick = it.next();
+		String AfterClick = it.next();
+		System.out.println(driver.getTitle());
+		driver.switchTo().window(AfterClick);
+		System.out.println(driver.getTitle());
+		driver.findElement(By.xpath("//span[contains(text(),'Login')]")).click();
+		driver.switchTo().window(BeforeClick);
+		System.out.println(driver.getTitle());
+		driver.findElement(By.id("opentab")).click();
+		System.out.println(driver.getTitle());
+		  //String click =it.next(); 
+		  String nextclick =it.next();
+		  driver.switchTo().window(nextclick);
+		  System.out.println(driver.getTitle());
+		 // Thread.sleep(2000);
+		 // driver.findElement(By.cssSelector(".theme-btn.register-btn")).click();
+		 		//driver.close();
+		//driver.quit();
+
+	}
+
+}
